@@ -1,0 +1,15 @@
+.DS_Store
+Thumbs.db
+
+# Local/generated QA previews and scratch outputs
+outputs/
+03_Word規程_QAレンダー/
+
+# Local dependency links or caches
+node_modules/
+**/node_modules/
+
+# Office temporary files
+~$*.docx
+~$*.xlsx
+*.tmp
