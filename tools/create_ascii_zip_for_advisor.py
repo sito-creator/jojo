@@ -37,6 +37,15 @@ NAME_MAP = [
     ("知的財産管理規程_ドラフト.docx", "24_intellectual_property_management_rules_draft.docx"),
     ("関連当事者取引管理規程_ドラフト.docx", "25_related_party_transaction_rules_draft.docx"),
     ("固定資産管理規程_ドラフト.docx", "26_fixed_asset_management_rules_draft.docx"),
+    ("棚卸資産管理規程_ドラフト.docx", "27_inventory_asset_management_rules_draft.docx"),
+    ("棚卸実施要領_ドラフト.docx", "28_inventory_count_procedures_draft.docx"),
+    ("賃金規程_ドラフト.docx", "29_wage_rules_draft.docx"),
+    ("人事評価規程_ドラフト.docx", "30_performance_evaluation_rules_draft.docx"),
+    ("出張・旅費規程_ドラフト.docx", "31_travel_expense_rules_draft.docx"),
+    ("執行役員規程_ドラフト.docx", "32_executive_officer_rules_draft.docx"),
+    ("監査役監査規程_ドラフト.docx", "33_corporate_auditor_audit_rules_draft.docx"),
+    ("監査役監査基準_ドラフト.docx", "34_corporate_auditor_audit_standards_draft.docx"),
+    ("文書管理規程_ドラフト.docx", "35_document_management_rules_draft.docx"),
 ]
 
 
