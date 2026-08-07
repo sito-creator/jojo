@@ -17,6 +17,12 @@ PACKAGE = ROOT / "04_支援会社提出パッケージ"
 ZIP_PATH = ROOT / "04_支援会社提出パッケージ.zip"
 PYTHON_FONT = "Arial Unicode MS"
 
+DIR_REVIEW = "00_レビュー依頼"
+DIR_REGULATIONS = "01_規程Word"
+DIR_LEDGERS = "02_運用台帳"
+DIR_TEMPLATES = "03_Word雛形"
+DIR_PROJECT = "04_進行管理"
+
 
 def set_font(run, size=11, bold=False, color="000000") -> None:
     run.font.name = PYTHON_FONT
@@ -135,10 +141,10 @@ def create_review_memo(path: Path) -> None:
     heading(doc, "3. 提出物")
     add_table(doc, [
         ["区分", "内容", "格納先"],
-        ["規程Word", "上場準備に必要な規程ドラフト35本", "01_regulations_word"],
-        ["運用台帳", "規程管理、稟議、会議体、反社チェック、与信、契約、外注、個人情報・システム、関連当事者、固定資産、内部監査のExcel台帳", "02_operation_ledgers"],
-        ["Word雛形", "議事録、稟議書、反社チェック記録票、与信審査票、契約審査票、内部監査調書等10本", "03_operation_word_templates"],
-        ["進行管理", "ロードマップ、ヒアリングシート、内部監査計画、Google Sheets確認メモ、未確定事項一覧、ひな形準拠チェックリスト", "04_project_management"],
+        ["規程Word", "上場準備に必要な規程ドラフト35本", DIR_REGULATIONS],
+        ["運用台帳", "規程管理、稟議、会議体、反社チェック、与信、契約、外注、個人情報・システム、関連当事者、固定資産、内部監査のExcel台帳", DIR_LEDGERS],
+        ["Word雛形", "議事録、稟議書、反社チェック記録票、与信審査票、契約審査票、内部監査調書等10本", DIR_TEMPLATES],
+        ["進行管理", "ロードマップ、ヒアリングシート、内部監査計画、Google Sheets確認メモ、未確定事項一覧、ひな形準拠チェックリスト", DIR_PROJECT],
     ])
 
     heading(doc, "4. 重点レビュー依頼事項")
@@ -200,7 +206,7 @@ def create_open_items(path: Path) -> None:
 def copy_tree(src: Path, dst: Path) -> None:
     if dst.exists():
         shutil.rmtree(dst)
-    shutil.copytree(src, dst)
+    shutil.copytree(src, dst, ignore=shutil.ignore_patterns(".DS_Store", "~$*"))
 
 
 def create_package() -> None:
@@ -208,37 +214,37 @@ def create_package() -> None:
         shutil.rmtree(PACKAGE)
     PACKAGE.mkdir(parents=True, exist_ok=True)
 
-    (PACKAGE / "00_review_request").mkdir()
-    (PACKAGE / "01_regulations_word").mkdir()
-    (PACKAGE / "02_operation_ledgers").mkdir()
-    (PACKAGE / "03_operation_word_templates").mkdir()
-    (PACKAGE / "04_project_management").mkdir()
+    (PACKAGE / DIR_REVIEW).mkdir()
+    (PACKAGE / DIR_REGULATIONS).mkdir()
+    (PACKAGE / DIR_LEDGERS).mkdir()
+    (PACKAGE / DIR_TEMPLATES).mkdir()
+    (PACKAGE / DIR_PROJECT).mkdir()
 
-    create_review_memo(PACKAGE / "00_review_request" / "review_request_memo.docx")
-    create_open_items(PACKAGE / "00_review_request" / "open_items_for_review.docx")
+    create_review_memo(PACKAGE / DIR_REVIEW / "レビュー依頼メモ.docx")
+    create_open_items(PACKAGE / DIR_REVIEW / "未確定論点・確認事項リスト.docx")
 
-    copy_tree(ROOT / "02_Word規程ドラフト_ASCIIファイル名", PACKAGE / "01_regulations_word")
-    shutil.copy2(ROOT / "03_運用テンプレート" / "Excel台帳" / "上場準備_運用台帳セット.xlsx", PACKAGE / "02_operation_ledgers" / "ipo_operation_ledgers.xlsx")
-    copy_tree(ROOT / "03_運用テンプレート" / "Word雛形", PACKAGE / "03_operation_word_templates")
+    copy_tree(ROOT / "02_Word規程ドラフト", PACKAGE / DIR_REGULATIONS)
+    shutil.copy2(ROOT / "03_運用テンプレート" / "Excel台帳" / "上場準備_運用台帳セット.xlsx", PACKAGE / DIR_LEDGERS / "上場準備_運用台帳セット.xlsx")
+    copy_tree(ROOT / "03_運用テンプレート" / "Word雛形", PACKAGE / DIR_TEMPLATES)
 
     for src, name in [
-        (ROOT / "00_進行管理" / "規程作成ロードマップ.md", "roadmap.md"),
-        (ROOT / "00_進行管理" / "初回ヒアリングシート.md", "initial_hearing_sheet.md"),
-        (ROOT / "00_進行管理" / "初年度内部監査計画_たたき台.md", "initial_internal_audit_plan.md"),
-        (ROOT / "00_進行管理" / "Googleスプレッドシート確認メモ.md", "google_sheets_review_memo.md"),
-        (ROOT / "00_進行管理" / "未確定事項一覧.md", "open_items_current.md"),
-        (ROOT / "00_進行管理" / "未確定事項一覧.docx", "open_items_current.docx"),
-        (ROOT / "00_進行管理" / "規程ひな形準拠チェックリスト.md", "template_conformance_checklist.md"),
-        (ROOT / "00_進行管理" / "規程ひな形読み取り_ヒアリング整理.md", "template_reading_and_hearing_notes.md"),
+        (ROOT / "00_進行管理" / "規程作成ロードマップ.md", "規程作成ロードマップ.md"),
+        (ROOT / "00_進行管理" / "初回ヒアリングシート.md", "初回ヒアリングシート.md"),
+        (ROOT / "00_進行管理" / "初年度内部監査計画_たたき台.md", "初年度内部監査計画_たたき台.md"),
+        (ROOT / "00_進行管理" / "Googleスプレッドシート確認メモ.md", "Googleスプレッドシート確認メモ.md"),
+        (ROOT / "00_進行管理" / "未確定事項一覧.md", "未確定事項一覧.md"),
+        (ROOT / "00_進行管理" / "未確定事項一覧.docx", "未確定事項一覧.docx"),
+        (ROOT / "00_進行管理" / "規程ひな形準拠チェックリスト.md", "規程ひな形準拠チェックリスト.md"),
+        (ROOT / "00_進行管理" / "規程ひな形読み取り_ヒアリング整理.md", "規程ひな形読み取り_ヒアリング整理.md"),
     ]:
         if src.exists():
-            shutil.copy2(src, PACKAGE / "04_project_management" / name)
+            shutil.copy2(src, PACKAGE / DIR_PROJECT / name)
 
     if ZIP_PATH.exists():
         ZIP_PATH.unlink()
     with zipfile.ZipFile(ZIP_PATH, "w", zipfile.ZIP_DEFLATED) as zf:
         for path in sorted(PACKAGE.rglob("*")):
-            if path.is_file():
+            if path.is_file() and ".DS_Store" not in path.parts and not path.name.startswith("~$"):
                 zf.write(path, path.relative_to(PACKAGE.parent))
 
     print(f"package={PACKAGE}")
